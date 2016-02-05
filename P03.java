@@ -41,7 +41,11 @@ public class P03  {
 
   
     private  static IndividualRecord[] indRecords;
-    private static FamilyInfo [] Family; 
+    private static FamilyInfo [] Family;
+    private static int indiFlag = 0, item = 0, item1 = -1;
+    private static String  line, FamilyId, IndiTag = null;
+    private static String name = null, sex = null, famc = null, fams = null,
+			id = null, birt = null;
     
     
 
@@ -56,10 +60,10 @@ public class P03  {
     	    DataInputStream dis = new DataInputStream(new BufferedInputStream(fis));
     	    
             String Line;
-            String name=null,sex = null,famc=null,fams=null, id=null;
-            String FamilyId=null, tag=null, IndiTag=null;
-            String birt=null, WifeId=null,HusbId=null;
-	        int indiFlag=0, item=0, item1=0;
+            //String name=null,sex = null,famc=null,fams=null, id=null;
+          //  String FamilyId=null, tag=null, IndiTag=null;
+           // String birt=null, WifeId=null,HusbId=null;
+	     //   int indiFlag=0, item=0, item1=0;
 	        
 	        
 		while (dis.available() != 0) {
