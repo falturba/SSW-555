@@ -4,10 +4,29 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
+ enum Tag{
+ 	INDI,
+	NAME,
+	SEX,
+	BIRT,
+	DEAT,
+	FAMC,
+	FAMS,
+	FAM,
+	MARR,
+	HUSB,
+	WIFE,
+	CHIL,
+	DIV,
+	DATE,
+	HEAD,
+	TRLR,
+	NOTE
+}
 
  class Line
 {
-	private String value=null,tag;
+	private String value,tag;
 	private int level;
 	public Line(int level,String value,String tag)
 	{
@@ -19,6 +38,7 @@ import java.util.ArrayList;
 	{
 		this.level = level;
 		this.tag = tag;
+		this.value = "no value";
 	}
 	private Line (String line)
 	{
@@ -27,28 +47,39 @@ import java.util.ArrayList;
 		this.level = Integer.parseInt(lineValues[0]);
 		if(level == 0)
 		{
-			if(lineValues.length == 3)
+
+			this.tag = lineValues[lineValues.length - 1];
+			if(lineValues.length > 2)
+		{
+			this.value=lineValues[1];
+			for(int i=2;i<lineValues.length-1;i++)
 			{
-				this.value = lineValues [1];
-				this.tag = lineValues[2];
+				this.value+=" ";
+				this.value+=lineValues[i];
 			}
-			else if(lineValues.length == 2)
-			{
-				this.tag = lineValues[1];
-			}
+		}
+		else
+			this.value = "no value";
 
 		}
 		else
 		{
-			if(lineValues.length == 3)
+			
+			this.tag = lineValues[1];
+			if(lineValues.length > 2)
 			{
-				this.value = lineValues [2];
-				this.tag = lineValues[1];
-			}
-			else if(lineValues.length == 2)
+				this.value = lineValues[2];
+			for(int i=3;i<lineValues.length;i++)
 			{
-				this.tag = lineValues[1];
+				this.value+=" ";
+				this.value+=lineValues[i];
 			}
+		}
+		else this.value = "no value";
+		}
+		if(!tagIsValid(this.tag))
+		{
+			this.tag = "invalid tag";
 		}
 		
 	}
@@ -75,7 +106,18 @@ import java.util.ArrayList;
 	{
 		return this.tag;
 	}
+ boolean tagIsValid(String value) 
+ {
+   for (Tag tag : Tag.values()) 
+   {
+        if (tag.name().equals(value))
+         {
+            return true;
+        }
+    }
 
+    return false;
+}
 }
  class Record
 {
@@ -314,11 +356,23 @@ public class P03
        		{
        			System.out.println(temp.familyId+ "   "+temp.husbandId+ "  " +temp.wifeId);
        		}
+       		// for(Record rec : handler.records)
+       		// {
+       		// 	//System.out.println("Printing record");
+       		// for(Line temp : rec.lines)
+       		// {
+       		// 	System.out.println("Line level:" + temp.getLevel());
+       		// 	System.out.println("Line tag:" + temp.getTag());
+       		// 	System.out.println("Line value:" + temp.getValue());
+       		// 	System.out.println("_______________________________");
+       		// }
+       	}
 
 
 
 
      }
- }
+ 
+ 
     	    
            
